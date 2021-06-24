@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskAPI.DataAccess;
 
 namespace TaskAPI.DataAccess.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    partial class TodoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210624090852_AuthorEntityAndData")]
+    partial class AuthorEntityAndData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,25 +28,8 @@ namespace TaskAPI.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -54,34 +39,22 @@ namespace TaskAPI.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Address 1",
-                            City = "City 1",
-                            FullName = "Author 1",
-                            Street = "Street 1"
+                            FullName = "Author 1"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Address 2",
-                            City = "City 2",
-                            FullName = "Author 2",
-                            Street = "Street 2"
+                            FullName = "Author 2"
                         },
                         new
                         {
                             Id = 3,
-                            Address = "Address 3",
-                            City = "City 3",
-                            FullName = "Author 3",
-                            Street = "Street 3"
+                            FullName = "Author 3"
                         },
                         new
                         {
                             Id = 4,
-                            Address = "Address 4",
-                            City = "City 4",
-                            FullName = "Author 4",
-                            Street = "Street 4"
+                            FullName = "Author 4"
                         });
                 });
 
@@ -99,7 +72,6 @@ namespace TaskAPI.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Due")
@@ -109,9 +81,7 @@ namespace TaskAPI.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -124,9 +94,9 @@ namespace TaskAPI.DataAccess.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
-                            Created = new DateTime(2021, 6, 24, 17, 9, 4, 530, DateTimeKind.Local).AddTicks(4390),
+                            Created = new DateTime(2021, 6, 24, 14, 38, 51, 502, DateTimeKind.Local).AddTicks(4377),
                             Description = "todo description 1",
-                            Due = new DateTime(2021, 6, 29, 17, 9, 4, 531, DateTimeKind.Local).AddTicks(6930),
+                            Due = new DateTime(2021, 6, 29, 14, 38, 51, 503, DateTimeKind.Local).AddTicks(4846),
                             Status = 0,
                             Title = "Todo 1"
                         },
@@ -134,9 +104,9 @@ namespace TaskAPI.DataAccess.Migrations
                         {
                             Id = 2,
                             AuthorId = 2,
-                            Created = new DateTime(2021, 6, 24, 17, 9, 4, 531, DateTimeKind.Local).AddTicks(8057),
+                            Created = new DateTime(2021, 6, 24, 14, 38, 51, 503, DateTimeKind.Local).AddTicks(5962),
                             Description = "Todo description 2",
-                            Due = new DateTime(2021, 6, 29, 17, 9, 4, 531, DateTimeKind.Local).AddTicks(8063),
+                            Due = new DateTime(2021, 6, 29, 14, 38, 51, 503, DateTimeKind.Local).AddTicks(5968),
                             Status = 1,
                             Title = "Todo 2"
                         },
@@ -144,9 +114,9 @@ namespace TaskAPI.DataAccess.Migrations
                         {
                             Id = 3,
                             AuthorId = 3,
-                            Created = new DateTime(2021, 6, 24, 17, 9, 4, 531, DateTimeKind.Local).AddTicks(8070),
+                            Created = new DateTime(2021, 6, 24, 14, 38, 51, 503, DateTimeKind.Local).AddTicks(6032),
                             Description = "Todo description 3",
-                            Due = new DateTime(2021, 6, 29, 17, 9, 4, 531, DateTimeKind.Local).AddTicks(8071),
+                            Due = new DateTime(2021, 6, 29, 14, 38, 51, 503, DateTimeKind.Local).AddTicks(6033),
                             Status = 2,
                             Title = "Todo 3"
                         });
@@ -155,17 +125,12 @@ namespace TaskAPI.DataAccess.Migrations
             modelBuilder.Entity("TaskAPI.Models.Todo", b =>
                 {
                     b.HasOne("TaskAPI.Models.Author", "Author")
-                        .WithMany("Todos")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("TaskAPI.Models.Author", b =>
-                {
-                    b.Navigation("Todos");
                 });
 #pragma warning restore 612, 618
         }

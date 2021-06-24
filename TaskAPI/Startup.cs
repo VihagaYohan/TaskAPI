@@ -11,7 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskAPI.Services;
+using TaskAPI.Services.Todos;
+using TaskAPI.Services.Authors;
 
 namespace TaskAPI
 {
@@ -35,6 +36,7 @@ namespace TaskAPI
 			});
 
 			services.AddScoped<ITodoRepository, TodoSqlServerService>();
+			services.AddScoped<IAuthorRepository, AuthorService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

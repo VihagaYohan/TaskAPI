@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskAPI.Models;
 
-namespace TaskAPI.Services
+namespace TaskAPI.Services.Authors
 {
-	public interface ITodoRepository
+	public interface IAuthorRepository
 	{
-		public List<Todo> AllTodos();
+		public List<Author> GetAllAuthors();
+		public Author GetAuthor(int id);
 	}
 }
